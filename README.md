@@ -1,8 +1,6 @@
-Here's a well-structured **`README.md`** file tailored for your YOLOv8 custom training project using **Label Studio** and **Ultralytics**, aimed at helping students learn the complete pipeline:
 
----
 
-````markdown
+
 # 🚦 Vehicle Detection Using YOLOv8 & Custom Dataset
 
 Welcome to this beginner-friendly YOLOv8 training project! This repository walks you through the complete pipeline of training a YOLOv8 object detection model on a custom dataset annotated using **Label Studio**.
