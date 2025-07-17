@@ -46,8 +46,8 @@ This repo is perfect if you're a beginner trying to understand how to:
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/yolov8-custom-training.git
-cd yolov8-custom-training
+git clone https://github.com/shuaibullattil/yolov_vehicle_detection.git
+cd yolov_vehicle_detection
 ````
 
 ### 2. Install Dependencies
