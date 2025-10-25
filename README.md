@@ -1,6 +1,3 @@
-
-
-
 # 🚦 Vehicle Detection Using YOLOv8 & Custom Dataset
 
 Welcome to this beginner-friendly YOLOv8 training project! This repository walks you through the complete pipeline of training a YOLOv8 object detection model on a custom dataset annotated using **Label Studio**.
@@ -35,11 +32,14 @@ This repo is perfect if you're a beginner trying to understand how to:
 
 ## 🛠 Requirements
 
-- Python 3.8+
-- GPU (optional but recommended)
-- pip
+Additional packages for API and inference:
 
----
+- ultralytics
+- opencv-python
+- pandas
+- xlsxwriter
+- fastapi
+- uvicorn
 
 ## ⚙️ Setup
 
@@ -48,7 +48,7 @@ This repo is perfect if you're a beginner trying to understand how to:
 ```bash
 git clone https://github.com/shuaibullattil/yolov_vehicle_detection.git
 cd yolov_vehicle_detection
-````
+```
 
 ### 2. Install Dependencies
 
@@ -98,18 +98,83 @@ datasets/
 
 ## 📄 data.yaml
 
+---
+
+## 🚦 How to Run Inference (Local Script)
+
+To run vehicle counting on a video using your trained YOLOv8 model:
+
+1. Place your trained model file (e.g., `best.pt`) in the project directory.
+2. Run the inference script:
+
+````bash
+
 Your `data.yaml` should look like this:
 
+You will be prompted to:
+- Choose the counting line orientation: horizontal (top to bottom) or vertical (left to right)
+- Enter the line position as a percentage (0-100):
+  - For horizontal: 0 = top, 100 = bottom, 50 = center
+  - For vertical: 0 = left, 100 = right, 50 = center
+
+The script will process your video and output:
+- Annotated video with detected vehicles and counts (in `assets/traffic_predict_with_counts.mp4`)
+- JSON and Excel files with vehicle counts (in the `results/` folder)
+
+---
+
+## 🚀 How to Use the API
+
+You can host the project as an API using FastAPI. The API lets users upload a video and specify the counting line orientation and position.
+
+### 1. Place your trained model file (`best.pt`) in the project directory.
+
+### 2. Install API dependencies:
+
+```bash
+
 ```yaml
+
+### 3. Run the API server:
+
+```bash
 path: datasets
 train: images/train
+
+### 4. Make a POST request to `/count` endpoint with:
+- `video`: the video file
+- `orientation`: `horizontal` or `vertical`
+- `position`: integer from 0 to 100 (line position as percentage)
+
+#### Example request (Python):
+```python
 val: images/val
 
 nc: 7
 names: ["bike", "bus", "truck", "car", "autorickshaw", "cycle", "heavy_vehicle"]
-```
+````
+
+#### API Response
+
+Returns a JSON object with:
+
+- `total_vehicles`: total count
+- `class_counts`: per-class counts
+- `orientation`: line orientation
+- `position`: line position
 
 ---
+
+## 📝 User Input for Line Position
+
+When running inference or using the API, you must specify:
+
+- **Orientation**: `horizontal` (top to bottom) or `vertical` (left to right)
+- **Position**: integer from 0 to 100
+  - For horizontal: 0 = top, 100 = bottom, 50 = center
+  - For vertical: 0 = left, 100 = right, 50 = center
+
+## This allows flexible placement of the counting line for your scenario.
 
 ## 🚀 Training the Model
 
@@ -125,13 +190,14 @@ yolo task=detect mode=train model=yolov8n.pt data=data.yaml epochs=50 imgsz=640 
 
 After training:
 
-* Results are saved in `runs/detect/train`
-* Metrics include:
+- Results are saved in `runs/detect/train`
+- Metrics include:
 
-  * mAP\@0.5
-  * mAP\@0.5:0.95
-  * Precision and Recall per class
-* Confusion matrix and prediction visuals are automatically generated
+  - mAP\@0.5
+  - mAP\@0.5:0.95
+  - Precision and Recall per class
+
+- Confusion matrix and prediction visuals are automatically generated
 
 ---
 
@@ -155,9 +221,9 @@ Here are some sample screenshots from the process:
 
 ## 📚 Credits & Resources
 
-* [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics)
-* [Label Studio](https://github.com/heartexlabs/label-studio)
-* Dataset collected from custom traffic footage
+- [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics)
+- [Label Studio](https://github.com/heartexlabs/label-studio)
+- Dataset collected from custom traffic footage
 
 ---
 
