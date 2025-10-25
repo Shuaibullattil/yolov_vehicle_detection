@@ -1,0 +1,13 @@
+{
+    "total_vehicles": 82,
+    "class_counts": {
+        "autorickshaw": 11,
+        "car": 13,
+        "bike": 50,
+        "truck": 2,
+        "heavy_vehicle": 1,
+        "bus": 5
+    },
+    "timestamp": "2025-10-25T22:18:58.539879",
+    "video_source": "assets/raw_traffic.mp4"
+}
